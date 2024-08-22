@@ -3,8 +3,9 @@ import banner1 from './banner1.jpg'
 
 const HeaderComponent = ({ onLogout, currentAccount, setCurrentAccount }) => {
   const logoutHandler = () => {
-    setCurrentAccount(null);
-    onLogout();
+    localStorage.setItem("CurrentAccount",JSON.stringify(null));
+    // setCurrentAccount(null);
+    // onLogout();
   };
 
   return (
@@ -73,7 +74,7 @@ const HeaderComponent = ({ onLogout, currentAccount, setCurrentAccount }) => {
                 <a
                   className="nav-link disabled"
                   href="#"
-                  tabindex="-1"
+                  tabIndex="-1"
                   aria-disabled="true"
                 >
                   Disabled
