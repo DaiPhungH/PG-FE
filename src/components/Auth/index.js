@@ -4,13 +4,15 @@ import "bootstrap/dist/css/bootstrap.css";
 // import "./style.css";
 
 import Input from "../UI/Input";
+import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 // import SocialMediaLoginComponent from "./SocialMediaLoginComponent";
 
 const LoginComponent = ({ accounts, onLogin }) => {
   // 2 State quản lý, input của người dùng
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const signUpHandler = () => {
     // onRegisterView();
   };
@@ -29,6 +31,7 @@ const LoginComponent = ({ accounts, onLogin }) => {
           console.log("Dang nhap thanh cong", cus[i]);
           localStorage.setItem("CurrentAccount",JSON.stringify(cus[i]));
           // onLogin();
+          navigate('/')
         }
         
       }else console.log("Dang nhap that bai", cus[i]);
@@ -121,12 +124,14 @@ const LoginComponent = ({ accounts, onLogin }) => {
                             </button>
                           </div>
                           <div className="col-9">
+                            <Link to="/register">
                             <button
                               className="btn btn-secondary"
                               onClick={signUpHandler}
                             >
                               Register
                             </button>
+                            </Link>
                           </div>
                         </div>
                       </div>

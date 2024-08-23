@@ -1,9 +1,12 @@
 import "bootstrap/dist/css/bootstrap.css";
 import banner1 from './banner1.jpg'
-
-const HeaderComponent = ({ onLogout, currentAccount, setCurrentAccount }) => {
+import { Link, useLocation } from 'react-router-dom';
+import LoginComponent from "../Auth";
+const HeaderComponent = ({ onLogout, setCurrentAccount }) => {
   const logoutHandler = () => {
     localStorage.setItem("CurrentAccount",JSON.stringify(null));
+    let currentAccount = JSON.parse(localStorage.getItem("currentAccount"));
+    
     // setCurrentAccount(null);
     // onLogout();
   };
@@ -82,7 +85,17 @@ const HeaderComponent = ({ onLogout, currentAccount, setCurrentAccount }) => {
               </li>
             </ul>
             <form className="d-flex">
-              {currentAccount && <p> xin chao {currentAccount.username}</p>}
+              {/* {currentAccount && <p> xin chao {currentAccount.username}</p>} */}
+              <Link to="/login">
+              <button
+                className="btn btn-outline-success"
+                type="submit"
+                onClick={logoutHandler}
+              >
+                Login
+              </button>
+              </Link>
+              <Link to="/login">
               <button
                 className="btn btn-outline-success"
                 type="submit"
@@ -90,6 +103,7 @@ const HeaderComponent = ({ onLogout, currentAccount, setCurrentAccount }) => {
               >
                 Logout
               </button>
+              </Link>
             </form>
           </div>
         </div>

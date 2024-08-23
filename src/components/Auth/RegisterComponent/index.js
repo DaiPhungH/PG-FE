@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./style.css";
 
 import Input from "../../UI/Input";
+import { Link, useNavigate } from 'react-router-dom';
 // import SocialMediaLoginComponent from "../LoginComponent/SocialMediaLoginComponent";
 // import NotificationComponent from "../NotificationComponent";
 // addAccount là hàm để set giá trị cho toàn bộ accounts
@@ -15,7 +16,7 @@ const RegisterComponent = ({ changeLoginForm, accounts, addAccount }) => {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const [account, setAccount] = useState({
     username: "",
     password: "",
@@ -64,16 +65,30 @@ const RegisterComponent = ({ changeLoginForm, accounts, addAccount }) => {
 
     var list = JSON.parse(localStorage.getItem("listUser"));
     // Validate
-    for (var i = 0, l = list.length; i < l; i++) {
-      if (list[i].username == username) {    
-          console.log("username đã tồn tại", username);
-          return;
-      }else {
-        list.push({username:username,password:password});
-        localStorage.setItem("listUser",JSON.stringify(list))
-        // href = "http://localhost:3000/login"
+    if(list){
+      let bol = true;
+    
+      for (var i = 0, l = list.length; i < l; i++) {
+        if (list[i].username == username) {    
+            console.log("username đã tồn tại", username);
+            bol =false
+            return;
+        } 
       }
+      if(bol = true){
+        {
+          list.push({username:username,password:password});
+          localStorage.setItem("listUser",JSON.stringify(list))
+          navigate('/login')
+        }
+      }
+    }else {
+      var custs = []
+      custs.push({username:username,password:password});
+      localStorage.setItem("listUser",JSON.stringify(custs))
+      navigate('/login')
     }
+
 
 
 
@@ -106,7 +121,7 @@ const RegisterComponent = ({ changeLoginForm, accounts, addAccount }) => {
   };
 
   const loginHandler = () => {
-    changeLoginForm();
+    // changeLoginForm();
   };
 
   return (
@@ -219,12 +234,14 @@ const RegisterComponent = ({ changeLoginForm, accounts, addAccount }) => {
                             </button>
                           </div>
                           <div className="col-9">
+                            <Link to="/login">
                             <button
                               className="btn btn-primary"
                               onClick={loginHandler}
                             >
                               Login
                             </button>
+                            </Link>
                           </div>
                         </div>
                       </div>

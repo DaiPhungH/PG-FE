@@ -17,7 +17,6 @@ function App() {
         <Route path="/detail/:productId" element={<DetailPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
-        {/* <Route path="/login" element={<LoginPage />} /> */}
         <Route path="/login" element={<LoginComponent />} />
         <Route path="/register" element={<RegisterComponent />} />
       </Routes>
