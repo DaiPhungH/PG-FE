@@ -1,115 +1,64 @@
-import "bootstrap/dist/css/bootstrap.css";
-import banner1 from './banner1.jpg'
-import { Link, useLocation } from 'react-router-dom';
-import LoginComponent from "../Auth";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import banner1 from './banner1.jpg';
+import './style.css';
+
 const HeaderComponent = ({ onLogout, setCurrentAccount }) => {
+  const [currentAccount, setCurrentAccountState] = useState(null);
+
+  useEffect(() => {
+    const account = JSON.parse(localStorage.getItem("CurrentAccount"));
+    setCurrentAccountState(account);
+  }, []);
+
   const logoutHandler = () => {
-    localStorage.setItem("CurrentAccount",JSON.stringify(null));
-    let currentAccount = JSON.parse(localStorage.getItem("currentAccount"));
-    
-    // setCurrentAccount(null);
-    // onLogout();
+    localStorage.removeItem("CurrentAccount");
+    setCurrentAccountState(null);
   };
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            Navbar
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+      <div className="header">
+        <div className="header-content">
+          <div className="left-section">
+            <Link to="/home" className="btn-text">
+              Home
+            </Link>
+            <Link to="/shop" className="btn-text">
+              Shop
+            </Link>
+          </div>
+          <h2 className="header-title">BOUTIQUE</h2>
+          <div className="right-section">
+            {currentAccount ? (
+              <>
+                <span className="me-3">Xin chào, {currentAccount.username}</span>
+                <Link to="/cart" className="btn-text me-2">
+                  Cart
+                </Link>
+                <button
+                  className="btn-text logout"
+                  type="button"
+                  onClick={logoutHandler}
                 >
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link disabled"
-                  href="#"
-                  tabIndex="-1"
-                  aria-disabled="true"
-                >
-                  Disabled
-                </a>
-              </li>
-            </ul>
-            <form className="d-flex">
-              {/* {currentAccount && <p> xin chao {currentAccount.username}</p>} */}
-              <Link to="/login">
-              <button
-                className="btn btn-outline-success"
-                type="submit"
-                onClick={logoutHandler}
-              >
-                Login
-              </button>
-              </Link>
-              <Link to="/login">
-              <button
-                className="btn btn-outline-success"
-                type="submit"
-                onClick={logoutHandler}
-              >
-                Logout
-              </button>
-              </Link>
-            </form>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn-text me-2">
+                  Login
+                </Link>
+                <Link to="/register" className="btn-text">
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
-      </nav>
+      </div>
       <div className="container-fluid">
-        <img src={banner1} style={{ height: "400px", width: "100%" }} />
+        <img src={banner1} alt="Banner" />
       </div>
     </>
   );
