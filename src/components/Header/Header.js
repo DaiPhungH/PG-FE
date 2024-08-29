@@ -21,7 +21,7 @@ const HeaderComponent = ({ onLogout, setCurrentAccount }) => {
       <div className="header">
         <div className="header-content">
           <div className="left-section">
-            <Link to="/home" className="btn-text">
+            <Link to="/" className="btn-text">
               Home
             </Link>
             <Link to="/shop" className="btn-text">
